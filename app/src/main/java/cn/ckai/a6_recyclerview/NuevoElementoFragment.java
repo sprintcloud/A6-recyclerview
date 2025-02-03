@@ -31,6 +31,16 @@ public class NuevoElementoFragment extends Fragment {
         ElementosViewModel elementosViewModel = new ViewModelProvider(requireActivity()).get(ElementosViewModel.class);
         NavController navController = Navigation.findNavController(view);
 
+        binding.crear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nombre = binding.nombre.getText().toString();
+                String description = binding.descripcion.getText().toString();
 
+                elementosViewModel.insertar(new Elemento(nombre, description));
+
+                navController.popBackStack();
+            }
+        });
     }
 }

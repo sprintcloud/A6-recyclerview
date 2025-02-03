@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -39,12 +41,6 @@ public class RecyclerElementosFragment extends Fragment {
         ElementosAdapter elementosAdapter = new ElementosAdapter();
         binding.recyclerView.setAdapter(elementosAdapter);
 
-        elementosViewModel.obtener().observe(getViewLifecycleOwner(), new Observer<List<Elemento>>() {
-            public void onChanged(List<Elemento> elementos) {
-                elementosAdapter.establecerLista(elementos);
-            }
-        });
-
         elementosViewModel = new ViewModelProvider(requireActivity()).get(ElementosViewModel.class);
         navController = Navigation.findNavController(view);
 
@@ -55,7 +51,27 @@ public class RecyclerElementosFragment extends Fragment {
             }
         });
 
+        elementosViewModel.obtener().observe(getViewLifecycleOwner(), new Observer<List<Elemento>>() {
+            public void onChanged(List<Elemento> elementos) {
+                elementosAdapter.establecerLista(elementos);
+            }
+        });
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int posicion = viewHolder.getAdapterPosition();
+                Elemento elemento = elementosAdapter.obtenerElemento(posicion);
+                elementosViewModel.eliminar(elemento);
+            }
+        }).attachToRecyclerView(binding.recyclerView);
     }
 
     class ElementoViewHolder extends RecyclerView.ViewHolder {
@@ -82,13 +98,24 @@ public class RecyclerElementosFragment extends Fragment {
 
             holder.binding.nombre.setText(elemento.nombre);
             holder.binding.valoracion.setRating((elemento.valoracion));
+            holder.binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    if (fromUser) {
+                        elementosViewModel.actualizar(elemento, rating);
+                    }
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    elementosViewModel.seleccionar(elemento);
+                    navController.navigate(R.id.action_recyclerElementosFragment_to_mostrarElementoFragment);
+                }
+            });
         }
 
-        /**
-         * Returns the total number of items in the data set held by the adapter.
-         *
-         * @return The total number of items in this adapter.
-         */
         @Override
         public int getItemCount() {
             return (elementos != null ? elementos.size() : 0);
@@ -98,7 +125,10 @@ public class RecyclerElementosFragment extends Fragment {
             this.elementos = elementos;
             notifyDataSetChanged();
         }
-    }
 
+        public Elemento obtenerElemento(int posicion) {
+            return elementos.get(posicion);
+        }
+    }
 
 }

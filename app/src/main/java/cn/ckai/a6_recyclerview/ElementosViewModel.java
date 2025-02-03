@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public class ElementosViewModel extends AndroidViewModel {
 
     MutableLiveData<List<Elemento>> listElementosMutableLiveData = new MutableLiveData<>();
 
+    MutableLiveData<Elemento> elementoSeleccionado = new MutableLiveData<>();
+
     public ElementosViewModel(@NonNull Application application) {
         super(application);
 
@@ -22,11 +25,11 @@ public class ElementosViewModel extends AndroidViewModel {
         listElementosMutableLiveData.setValue(elementosRepositorio.obtener());
     }
 
-    MutableLiveData<List<Elemento>> obtener(){
+    MutableLiveData<List<Elemento>> obtener() {
         return listElementosMutableLiveData;
     }
 
-    void insertar(Elemento elemento){
+    void insertar(Elemento elemento) {
         elementosRepositorio.insertar(elemento, new ElementosRepositorio.Callback() {
             @Override
             public void cuandoFinalice(List<Elemento> elementos) {
@@ -35,7 +38,7 @@ public class ElementosViewModel extends AndroidViewModel {
         });
     }
 
-    void eliminar(Elemento elemento){
+    void eliminar(Elemento elemento) {
         elementosRepositorio.eliminar(elemento, new ElementosRepositorio.Callback() {
             @Override
             public void cuandoFinalice(List<Elemento> elementos) {
@@ -44,12 +47,20 @@ public class ElementosViewModel extends AndroidViewModel {
         });
     }
 
-    void actualizar(Elemento elemento, float valoracion){
+    void actualizar(Elemento elemento, float valoracion) {
         elementosRepositorio.actualizar(elemento, valoracion, new ElementosRepositorio.Callback() {
             @Override
             public void cuandoFinalice(List<Elemento> elementos) {
                 listElementosMutableLiveData.setValue(elementos);
             }
         });
+    }
+
+    void seleccionar(Elemento elemento) {
+        elementoSeleccionado.setValue(elemento);
+    }
+
+    MutableLiveData<Elemento> seleccionado() {
+        return elementoSeleccionado;
     }
 }

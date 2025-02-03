@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import cn.ckai.a6_recyclerview.databinding.FragmentMostrarElementoBinding;
@@ -27,6 +29,22 @@ public class MostrarElementoFragment extends Fragment {
 
         ElementosViewModel elementosViewModel = new ViewModelProvider(requireActivity()).get(ElementosViewModel.class);
 
+        elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Elemento>() {
+            @Override
+            public void onChanged(Elemento elemento) {
+                binding.nombre.setText(elemento.nombre);
+                binding.descripcion.setText(elemento.descripcion);
+                binding.valoracion.setRating(elemento.valoracion);
 
+                binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                        if (b) {
+                            elementosViewModel.actualizar(elemento, v);
+                        }
+                    }
+                });
+            }
+        });
     }
 }
