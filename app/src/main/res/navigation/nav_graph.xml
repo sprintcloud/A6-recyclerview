@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/recyclerElementosFragment"
-        android:name="com.company.recyclerview.RecyclerElementosFragment"
+        android:name="cn.ckai.a6_recyclerview.RecyclerElementosFragment"
         android:label="fragment_recycler_elementos"
-        tools:layout="@layout/fragment_recycler_elementos" >
+        tools:layout="@layout/fragment_recycler_elementos">
         <action
             android:id="@+id/action_recyclerElementosFragment_to_mostrarElementoFragment"
             app:destination="@id/mostrarElementoFragment" />
@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/nuevoElementoFragment"
-        android:name="com.company.recyclerview.NuevoElementoFragment"
+        android:name="cn.ckai.a6_recyclerview.NuevoElementoFragment"
         android:label="fragment_nuevo_elemento"
         tools:layout="@layout/fragment_nuevo_elemento" />
     <fragment
         android:id="@+id/mostrarElementoFragment"
-        android:name="com.company.recyclerview.MostrarElementoFragment"
+        android:name="cn.ckai.a6_recyclerview.MostrarElementoFragment"
         android:label="fragment_mostrar_elemento"
         tools:layout="@layout/fragment_mostrar_elemento" />
 </navigation>

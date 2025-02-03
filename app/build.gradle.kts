@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "cn.ckai.a6_recyclerview"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "cn.ckai.a6_recyclerview"
         minSdk = 34
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
