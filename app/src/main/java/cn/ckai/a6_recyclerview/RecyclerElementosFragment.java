@@ -96,7 +96,9 @@ public class RecyclerElementosFragment extends Fragment {
         public void onBindViewHolder(@NonNull ElementoViewHolder holder, int position) {
             Elemento elemento = elementos.get(position);
 
-            holder.binding.nombre.setText(elemento.nombre);
+            holder.binding.nombreAuthor.setText(elemento.getNombre_author());
+            holder.binding.nombreLibro.setText(elemento.getNombre_libro());
+            ImageLoader.loadImageById(requireContext(), elemento.getImageResourceId(), holder.binding.imageLibro);
             holder.binding.valoracion.setRating((elemento.valoracion));
             holder.binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override

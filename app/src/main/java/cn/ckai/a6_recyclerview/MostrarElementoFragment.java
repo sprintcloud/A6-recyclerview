@@ -32,8 +32,12 @@ public class MostrarElementoFragment extends Fragment {
         elementosViewModel.seleccionado().observe(getViewLifecycleOwner(), new Observer<Elemento>() {
             @Override
             public void onChanged(Elemento elemento) {
-                binding.nombre.setText(elemento.nombre);
-                binding.descripcion.setText(elemento.descripcion);
+                binding.nombreAuthor.setText(elemento.getNombre_author());
+                binding.nombreLibro.setText(elemento.getNombre_libro());
+                binding.descripcion.setText(elemento.getDescripcion());
+                ImageLoader.loadImageById(requireContext(), elemento.getImageResourceId(), binding.imageLibro);
+
+                binding.ISBN.setText(elemento.getISBN());
                 binding.valoracion.setRating(elemento.valoracion);
 
                 binding.valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
