@@ -11,7 +11,7 @@ android {
         minSdk = 34
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,12 +37,14 @@ android {
 
 dependencies {
 
+    implementation(libs.room.runtime)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.navigation.ui)
     implementation(libs.navigation.fragment)
     implementation(libs.constraintlayout)
     implementation(libs.legacy.support.v4)
+    annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

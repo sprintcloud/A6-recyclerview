@@ -1,8 +1,13 @@
 package cn.ckai.a6_recyclerview;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class Elemento {
+    @PrimaryKey(autoGenerate = true)
+    int id;
     private String nombre_libro;
     private String nombre_author;
     private String descripcion;
@@ -11,6 +16,7 @@ public class Elemento {
     float valoracion;
 
     public Elemento(String nombre_libro, String descripcion, String ISBN, String nombre_author, String imageId) {
+
         this.nombre_libro = nombre_libro;
         this.descripcion = descripcion;
         this.ISBN = ISBN;

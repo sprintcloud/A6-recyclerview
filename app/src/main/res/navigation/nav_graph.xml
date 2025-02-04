@@ -9,14 +9,25 @@
         android:id="@+id/recyclerElementosFragment"
         android:name="cn.ckai.a6_recyclerview.RecyclerElementosFragment"
         android:label="fragment_recycler_elementos"
-        tools:layout="@layout/fragment_recycler_elementos">
-        <action
-            android:id="@+id/action_recyclerElementosFragment_to_mostrarElementoFragment"
-            app:destination="@id/mostrarElementoFragment" />
-        <action
-            android:id="@+id/action_recyclerElementosFragment_to_nuevoElementoFragment"
-            app:destination="@id/nuevoElementoFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_recycler_elementos"/>
+
+    <fragment
+        android:id="@+id/recyclerValoracionFragment"
+        android:name="cn.ckai.a6_recyclerview.RecyclerValoracionFragment"
+        android:label="fragment_recycler_elementos"
+        tools:layout="@layout/fragment_recycler_elementos"/>
+
+    <fragment
+        android:id="@+id/recyclerBuscarFragment"
+        android:name="cn.ckai.a6_recyclerview.RecyclerBusquedaFragment"
+        android:label="fragment_recycler_elementos"
+        tools:layout="@layout/fragment_recycler_elementos"/>
+    <action
+        android:id="@+id/action_mostrarElementoFragment"
+        app:destination="@id/mostrarElementoFragment" />
+    <action
+        android:id="@+id/action_nuevoElementoFragment"
+        app:destination="@id/nuevoElementoFragment" />
     <fragment
         android:id="@+id/nuevoElementoFragment"
         android:name="cn.ckai.a6_recyclerview.NuevoElementoFragment"
