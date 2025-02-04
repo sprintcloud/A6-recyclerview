@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,11 +20,14 @@ import cn.ckai.a6_recyclerview.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+    ElementosViewModel elementosViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView((binding = ActivityMainBinding.inflate(getLayoutInflater())).getRoot());
+
+        elementosViewModel = new ViewModelProvider(this).get(ElementosViewModel.class);
 
         if (getSupportActionBar() != null) {
             Objects.requireNonNull(getSupportActionBar()).hide();
@@ -47,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     binding.searchView.setVisibility(View.GONE);
                 }
+
+                binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) { return false; }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        elementosViewModel.establecerTerminoBusqueda(newText);
+                        return false;
+                    }
+                });
             }
         });
     }

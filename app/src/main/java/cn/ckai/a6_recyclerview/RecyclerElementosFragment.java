@@ -26,7 +26,7 @@ import cn.ckai.a6_recyclerview.databinding.ViewholderElementoBinding;
 
 public class RecyclerElementosFragment extends Fragment {
 
-    private FragmentRecyclerElementosBinding binding;
+    public FragmentRecyclerElementosBinding binding;
     private ElementosViewModel elementosViewModel;
     private NavController navController;
 

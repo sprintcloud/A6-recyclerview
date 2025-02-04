@@ -63,6 +63,4 @@ public class ElementosViewModel extends AndroidViewModel {
     void establecerTerminoBusqueda(String t){
         terminoBusqueda.setValue(t);
     }
-
-
 }
